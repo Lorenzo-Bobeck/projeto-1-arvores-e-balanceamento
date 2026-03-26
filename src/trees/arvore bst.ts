@@ -8,3 +8,37 @@ export class Node {
   }
 }
 
+export class BST {
+  root: Node | null = null;
+
+  insert(key: number) {
+    this.root = this._insert(this.root, key);
+  }
+
+  private _insert(node: Node | null, key: number): Node {
+    if (!node) return new Node(key);
+
+    if (key < node.key) node.left = this._insert(node.left, key);
+    else node.right = this._insert(node.right, key);
+
+    return node;
+  }
+
+  search(key: number): boolean {
+    return this._search(this.root, key);
+  }
+
+  private _search(node: Node | null, key: number): boolean {
+    if (!node) return false;
+    if (node.key === key) return true;
+
+    if (key < node.key) return this._search(node.left, key);
+    return this._search(node.right, key);
+  }
+
+  height(node: Node | null = this.root): number {
+    if (!node) return -1;
+    return 1 + Math.max(this.height(node.left), this.height(node.right));
+  }
+
+}
